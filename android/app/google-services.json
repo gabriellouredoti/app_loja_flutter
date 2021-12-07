@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "211489106310",
+    "project_id": "flutterlojavirtual-866b2",
+    "storage_bucket": "flutterlojavirtual-866b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211489106310:android:4f40ace7e1706e42aca407",
+        "android_client_info": {
+          "package_name": "br.com.gabriel.loja_virtual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "211489106310-etq9a053amjb8m8udcirf4qlupleh8v2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbL1VnmXBwluv_PXkmwdzjq_l3-58hpvY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "211489106310-etq9a053amjb8m8udcirf4qlupleh8v2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
