@@ -24,9 +24,7 @@ class HomeScreen extends StatelessWidget {
             centerTitle: true,
           ),
           drawer: CustomDrawer(_pageController),
-          body: ProductsTab(
-
-          ),
+          body: ProductsTab(),
         ),
         Container(color: Colors.purple,),
         Container(color: Colors.blue,),
