@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/tabs/home_tab.dart';
 
+//componentes criados
+import 'package:loja_virtual/tabs/home_tab.dart';
+import 'package:loja_virtual/widgets/custom_drawer.dart';
+import 'package:loja_virtual/tabs/produtcs_tab.dart';
 class HomeScreen extends StatelessWidget {
 
   final _pageController = PageController();
@@ -11,7 +14,22 @@ class HomeScreen extends StatelessWidget {
       controller: _pageController,
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        HomeTab(),
+        Scaffold(
+          body: HomeTab(),
+          drawer: CustomDrawer(_pageController)
+        ),
+        Scaffold(
+          appBar: AppBar(
+            title: Text("Produtos"),
+            centerTitle: true,
+          ),
+          drawer: CustomDrawer(_pageController),
+          body: ProductsTab(
+
+          ),
+        ),
+        Container(color: Colors.purple,),
+        Container(color: Colors.blue,),
       ],
     );
   }
