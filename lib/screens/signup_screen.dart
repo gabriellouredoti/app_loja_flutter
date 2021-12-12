@@ -1,36 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/models/user_model.dart';
-import 'package:loja_virtual/screens/signup_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class LoginScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget{
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
 
   final _formKey = GlobalKey<FormState>();
+
+  final _nameController = TextEditingController();
+  final _mailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text("Entrar"),
+        title: Text("Criar Conta"),
         centerTitle:  true,
-        actions: [
-          TextButton(
-            onPressed: (){
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => SignUpScreen())
-              );
-            }, 
-            child: Text(
-              "CRIAR CONTA",
-              style: TextStyle(fontSize: 15.0,),
-            ),
-            style: TextButton.styleFrom(primary: Colors.white)
-          )
-        ],
       ),
       body: ScopedModelDescendant<UserModel>(
         builder: (context, child, model){
-
           if(model.isLoading)
             return Center(child: CircularProgressIndicator(),);
 
@@ -40,6 +34,17 @@ class LoginScreen extends StatelessWidget {
               padding: EdgeInsets.all(16),
               children: [
                 TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    hintText: "Nome Completo"
+                  ),
+                  validator: (text){
+                    if(text!.isEmpty || text.length < 6) return "Nome inválido";
+                  },
+                ),
+                SizedBox(height: 16.0,),
+                TextFormField(
+                  controller: _mailController,
                   decoration: InputDecoration(
                     hintText: "E-mail"
                   ),
@@ -50,6 +55,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0,),
                 TextFormField(
+                  controller: _passwordController,
                   decoration: InputDecoration(
                     hintText: "Senha"
                   ),
@@ -58,13 +64,15 @@ class LoginScreen extends StatelessWidget {
                     if(text!.isEmpty || text.length < 6) return "Senha inválida";
                   },
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: (){},
-                    child: Text("Esqueci minha senha", textAlign: TextAlign.right,),
-                    style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                SizedBox(height: 16.0,),
+                TextFormField(
+                  controller: _addressController,
+                  decoration: InputDecoration(
+                    hintText: "Endereço"
                   ),
+                  validator: (text){
+                    if(text!.isEmpty) return "Endereço inválido";
+                  },
                 ),
                 SizedBox(height: 16.0,),
                 //uso para deixar o botão mais alto
@@ -72,12 +80,23 @@ class LoginScreen extends StatelessWidget {
                   height: 44.0,
                   child: ElevatedButton(
                     onPressed: (){
+
+                      Map<String, dynamic> userData = {
+                        "name": _nameController.text,
+                        "email": _mailController.text,
+                        "address": _addressController.text
+                      };
+
                       if(_formKey.currentState!.validate()){
-                        
+                        model.signUp(
+                          userData: userData, 
+                          pass: _passwordController.text, 
+                          onSuccess: _onSucess, 
+                          onFail: _onFail
+                        );
                       }
-                      model.signIn();
                     }, 
-                    child: Text("Entrar",
+                    child: Text("Criar Conta",
                       style: TextStyle(fontSize: 18.0,),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -89,7 +108,17 @@ class LoginScreen extends StatelessWidget {
             ),
           );
         },
-      ),
+      )
     );
   }
+
+  void _onSucess(){
+
+  }
+
+  void _onFail(){
+
+  }
+
+
 }
