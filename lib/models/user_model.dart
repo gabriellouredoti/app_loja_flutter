@@ -13,6 +13,15 @@ class UserModel extends Model{
 
   bool isLoading = false;
 
+  // Mostra o usuaário quando o app abre
+  @override
+  void addListener(VoidCallback listener) async {
+    // TODO: implement addListener
+    super.addListener(listener);
+
+    await _loadCurrentUser();
+  }
+
   void signUp({required Map<String, dynamic> userData, required String pass, required VoidCallback onSuccess, required VoidCallback onFail}){
     
     isLoading = true;
@@ -38,15 +47,27 @@ class UserModel extends Model{
 
   }
 
-  void signIn() async {
+  void signIn({required String email, required String password, 
+    required VoidCallback onSuccess, required VoidCallback onFail}) async {
+    
     isLoading = true;
     notifyListeners();
 
-    await Future.delayed(Duration(seconds: 3));
+    _auth.signInWithEmailAndPassword(email: email, password: password)
+      .then((user) async {
 
-    isLoading = false;
-    notifyListeners();
+        await _loadCurrentUser();
 
+        onSuccess();
+        isLoading = false;
+        notifyListeners();
+      })
+      .catchError((err){
+        onFail();
+        isLoading = false;
+        notifyListeners();
+      });
+  
   }
 
   void recoveryPass(){   
@@ -71,4 +92,20 @@ class UserModel extends Model{
     
   }
 
+  Future<Null> _loadCurrentUser() async {
+    if(_auth.currentUser != null){
+
+      if(userData["name"] == null){
+
+        DocumentSnapshot docUser = await FirebaseFirestore.instance.collection("users")
+          .doc(_auth.currentUser?.uid).get();
+
+        userData = docUser.data() as Map<String, dynamic>;
+      }
+      
+    }
+
+    notifyListeners();
+  }
+ 
 }

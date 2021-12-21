@@ -96,7 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           model.signUp(
                             userData: userData, 
                             pass: _passwordController.text, 
-                            onSuccess: _onSucess, 
+                            onSuccess: _onSuccess, 
                             onFail: _onFail
                           );
                         }
@@ -118,7 +118,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  void _onSucess(){
+  void _onSuccess(){
     _scaffoldKey.currentState?.showSnackBar(
       SnackBar(
         content: Text("Usuário criado com sucesso!"),
@@ -130,7 +130,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _onFail(){
-    print("======>fail");
     _scaffoldKey.currentState?.showSnackBar(
       SnackBar(
         content: Text("Falha ao criar o usuário!"),
