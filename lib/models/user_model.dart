@@ -13,10 +13,9 @@ class UserModel extends Model{
 
   bool isLoading = false;
 
-  // Mostra o usuaário quando o app abre
+  // Mostra o usuário quando o app abre
   @override
   void addListener(VoidCallback listener) async {
-    // TODO: implement addListener
     super.addListener(listener);
 
     await _loadCurrentUser();
@@ -70,8 +69,8 @@ class UserModel extends Model{
   
   }
 
-  void recoveryPass(){   
-    
+  void recoveryPass({required String email}){   
+    _auth.sendPasswordResetEmail(email: email);
   }
 
   void signOut() async {
@@ -102,7 +101,7 @@ class UserModel extends Model{
 
         userData = docUser.data() as Map<String, dynamic>;
       }
-      
+
     }
 
     notifyListeners();
