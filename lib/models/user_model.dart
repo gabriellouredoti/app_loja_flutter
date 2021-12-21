@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,7 +9,6 @@ class UserModel extends Model{
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  late UserCredential firebaseUser;
   Map<String, dynamic> userData = Map();
 
   bool isLoading = false;
@@ -23,8 +23,7 @@ class UserModel extends Model{
       password: pass
     )
     .then((user) async {
-      firebaseUser = user;
-
+     
       await _saveUserData(userData);
 
       onSuccess();
@@ -50,13 +49,25 @@ class UserModel extends Model{
 
   }
 
-  void recoveryPass(){
+  void recoveryPass(){   
     
+  }
+
+  void signOut() async {
+    await _auth.signOut();
+
+    userData = Map();
+    notifyListeners();
+
+  }
+
+  bool isLoggedIn(){
+    return _auth.currentUser != null;
   }
 
   Future<Null> _saveUserData(Map<String, dynamic> userData) async {
     this.userData = userData;
-    await FirebaseFirestore.instance.collection("users").doc().set(userData);
+    await FirebaseFirestore.instance.collection("users").doc(_auth.currentUser?.uid).set(userData);
     
   }
 
