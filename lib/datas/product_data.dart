@@ -1,13 +1,9 @@
-
-import 'dart:ffi';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductData {
 
   late String id;
-  // String category;
+  late String category;
 
   late String description;
   late String title;
@@ -22,9 +18,16 @@ class ProductData {
     description = snapshot["description"];
     title = snapshot["title"];
     price = snapshot["price"] + 0.0;
-    // category = snapshot["category"];
     images = snapshot["images"];
     sizes = snapshot["sizes"];
+  }
+
+  Map<String, dynamic> toResumeMap(){
+    return {
+      "title": title,
+      "description": description,
+      "price": price
+    };
   }
 
 }

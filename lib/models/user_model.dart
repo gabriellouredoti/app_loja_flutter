@@ -13,6 +13,11 @@ class UserModel extends Model{
 
   bool isLoading = false;
 
+  late final firebaseUser;
+
+  // crio para poder acessar as propriedades desta classe em outras partes do programa
+  static UserModel of(BuildContext context) => ScopedModel.of<UserModel>(context);
+
   // Mostra o usuário quando o app abre
   @override
   void addListener(VoidCallback listener) async {
@@ -77,6 +82,8 @@ class UserModel extends Model{
     await _auth.signOut();
 
     userData = Map();
+    firebaseUser = null;
+
     notifyListeners();
 
   }
@@ -98,8 +105,11 @@ class UserModel extends Model{
 
         DocumentSnapshot docUser = await FirebaseFirestore.instance.collection("users")
           .doc(_auth.currentUser?.uid).get();
+        
+        firebaseUser = _auth.currentUser?.uid;
 
         userData = docUser.data() as Map<String, dynamic>;
+        
       }
 
     }
