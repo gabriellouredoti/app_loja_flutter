@@ -13,7 +13,7 @@ class UserModel extends Model{
 
   bool isLoading = false;
 
-  late final firebaseUser;
+  String? firebaseUser;
 
   // crio para poder acessar as propriedades desta classe em outras partes do programa
   static UserModel of(BuildContext context) => ScopedModel.of<UserModel>(context);
@@ -82,7 +82,6 @@ class UserModel extends Model{
     await _auth.signOut();
 
     userData = Map();
-    firebaseUser = null;
 
     notifyListeners();
 

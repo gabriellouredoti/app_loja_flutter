@@ -13,7 +13,7 @@ class CartProduct {
 
   late String size;
 
-  late ProductData productData;
+  ProductData? productData;
 
   CartProduct();
 
