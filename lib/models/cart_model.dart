@@ -42,4 +42,23 @@ class CartModel extends Model {
 
   }
 
+  void decProduct(CartProduct cartProduct){
+    cartProduct.quantity--; 
+
+    FirebaseFirestore.instance.collection("users").doc(user.firebaseUser)
+      .collection("cart").doc(cartProduct.cid).update(cartProduct.toMap());
+    
+    notifyListeners();
+
+  }
+
+  void incProduct(CartProduct cartProduct){
+    cartProduct.quantity++; 
+
+    FirebaseFirestore.instance.collection("users").doc(user.firebaseUser)
+      .collection("cart").doc(cartProduct.cid).update(cartProduct.toMap());
+    
+    notifyListeners();
+  }
+
 }

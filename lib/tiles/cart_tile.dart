@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:loja_virtual/datas/cart_product.dart';
 import 'package:loja_virtual/datas/product_data.dart';
+import 'package:loja_virtual/models/cart_model.dart';
 
 class CartTile extends StatelessWidget {
 
@@ -44,18 +45,24 @@ class CartTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                        onPressed: cartProduct.quantity > 1 ? (){} : null, 
+                        onPressed: cartProduct.quantity > 1 ? (){
+                          CartModel.of(context).decProduct(cartProduct);
+                        } : null, 
                         icon: Icon(Icons.remove),
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(cartProduct.quantity.toString()),
                       IconButton(
-                        onPressed: (){}, 
+                        onPressed: (){
+                          CartModel.of(context).incProduct(cartProduct);
+                        }, 
                         icon: Icon(Icons.add),
                         color: Theme.of(context).primaryColor
                       ),
                       TextButton(
-                        onPressed: (){}, 
+                        onPressed: (){
+                          CartModel.of(context).removeCartItem(cartProduct);
+                        }, 
                         child: Text("Remover")
                       )
                     ],
